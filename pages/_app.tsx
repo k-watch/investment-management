@@ -4,23 +4,25 @@ import {
   QueryClientProvider,
   Hydrate,
 } from '@tanstack/react-query';
+import { AppProps } from 'next/app';
+import { Provider } from 'react-redux';
 
-import { createEmotionCache } from '@src/styles/utils/createEmotionCache';
+import { createEmotionCache } from '@src/utils/createEmotionCache';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import theme from '@src/styles/theme';
-import { AppProps } from 'next/app';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { store } from '@src/store';
 
 const clientSideEmotionCache = createEmotionCache();
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
+const queryClient = new QueryClient();
 
 const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-  const queryClient = new QueryClient();
 
   return (
     <>
@@ -30,7 +32,9 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
             <Hydrate state={pageProps.dehydratedState}>
               <ReactQueryDevtools initialIsOpen={false} />
               <CssBaseline />
-              <Component {...pageProps} />
+              <Provider store={store}>
+                <Component {...pageProps} />
+              </Provider>
             </Hydrate>
           </QueryClientProvider>
         </ThemeProvider>
