@@ -1,13 +1,7 @@
-import { createTheme, responsiveFontSizes } from '@mui/material/styles';
-import { deepPurple, amber } from '@mui/material/colors';
+import { createTheme } from '@mui/material';
 
-let theme = createTheme({
-  palette: {
-    primary: deepPurple,
-    secondary: amber,
-  },
+const theme = createTheme({
+  palette: {},
 });
-
-theme = responsiveFontSizes(theme);
 
 export default theme;

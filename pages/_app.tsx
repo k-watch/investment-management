@@ -7,12 +7,14 @@ import {
 import { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 
+import initStyles from '@src/styles/initStyles';
 import { createEmotionCache } from '@src/utils/createEmotionCache';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import theme from '@src/styles/theme';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { store } from '@src/store';
+import { Global } from '@emotion/react';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -27,6 +29,7 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
   return (
     <>
       <CacheProvider value={emotionCache}>
+        <Global styles={initStyles} />
         <ThemeProvider theme={theme}>
           <QueryClientProvider client={queryClient}>
             <Hydrate state={pageProps.dehydratedState}>
