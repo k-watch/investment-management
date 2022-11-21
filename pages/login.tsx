@@ -1,7 +1,7 @@
 import Login from '@src/components/login/Login';
 
-const index = () => {
+const LoginPage = () => {
   return <Login />;
 };
 
-export default index;
+export default LoginPage;
