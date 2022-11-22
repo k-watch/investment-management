@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { httpInstance } from '@src/api/httpInstance';
 import { IAuth } from '@src/models/IAuth';
+import httpInstance from '@src/api/httpInstance';
 
 const EXPIRED_TIME = 999999;
 
@@ -22,12 +22,15 @@ export default async function handler(
   const { email, password } = req.body;
 
   try {
-    const data = await httpInstance.post<IAuth>('http://localhost:8000/login', {
-      email,
-      password,
-    });
+    const { data } = await httpInstance.post<IAuth>(
+      'http://localhost:8000/login',
+      {
+        email,
+        password,
+      }
+    );
 
-    const accessToken = data?.accessToken;
+    const accessToken = data.accessToken;
     // const expiredTime = EXPIRED_TIME;
 
     res.setHeader('Set-Cookie', [`token=${accessToken}; HttpOnly; path=/;`]);

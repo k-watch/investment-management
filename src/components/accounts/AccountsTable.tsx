@@ -8,18 +8,15 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {
-  ACCOUNT_STATUS,
-  API_URL,
-  BROKERS,
-  convertNumberFormat,
-} from '@src/types/enum';
+import { ACCOUNT_STATUS, BROKERS, convertNumberFormat } from '@src/types/enum';
 import { useQueries, useQuery } from '@tanstack/react-query';
 import { reqGetAccountList, reqGetUsers } from '@src/api/accounts';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { blue } from '@mui/material/colors';
 import { red } from '@mui/material/colors';
+import { useDispatch } from 'react-redux';
+import { setTotalPage } from '@src/store/accounts/accounts';
 
 const test = (row) => {
   return row.assets === row.payments
@@ -29,15 +26,79 @@ const test = (row) => {
     : 'loss';
 };
 
-const AccountList = () => {
+const activeList = [
+  ['true', '활성화'],
+  ['false', '비활성화'],
+];
+
+const _statusMap = new Map([
+  [9999, '관리자확인필요'],
+  [1, '입금대기'],
+  [2, '운용중'],
+  [3, '투자중지'],
+  [4, '해지'],
+]);
+
+const _nameMap = new Map([
+  [209, '유안타증권'],
+  [218, '현대증권'],
+  [230, '미래에셋증권'],
+  [238, '대우증권'],
+  [240, '삼성증권'],
+  [243, '한국투자증권'],
+  [247, '우리투자증권'],
+  [261, '교보증권'],
+  [262, '하이투자증권'],
+  [263, 'HMC투자증권'],
+  [264, '키움증권'],
+  [265, '이베스트투자증권'],
+  [266, 'SK증권'],
+  [267, '대신증권'],
+  [268, '아이엠투자증권'],
+  [269, '한화투자증권'],
+  [270, '하나대투자증권'],
+  [279, '동부증권'],
+  [280, '유진투자증권'],
+  [288, '카카오페이증권'],
+  [287, '메리츠종합금융증권'],
+  [290, '부국증권'],
+  [291, '신영증권'],
+  [292, 'LIG투자증권'],
+  [271, '토스증권'],
+]);
+
+function getByValue(map, searchValue) {
+  for (const [key, value] of map.entries()) {
+    if (value === searchValue) return key;
+  }
+}
+
+const AccountsTable = () => {
   const router = useRouter();
   const [list, setList] = useState<IAccount[]>([]);
-  const { page, q, broker, status, isActive } = router.query;
+
+  const query = useMemo(() => {
+    if (router.query) {
+      return {
+        page: router.query.page ? Number(router.query.page) : 1,
+        broker: getByValue(_nameMap, router.query.broker),
+        status: getByValue(_statusMap, router.query.status),
+        isActive:
+          router.query.isActive === undefined
+            ? undefined
+            : router.query.isActive === '활성화'
+            ? 'true'
+            : 'false',
+        q: router.query.q,
+      };
+    }
+  }, [router.query]);
+
   const [resAccounts, resUsers] = useQueries({
     queries: [
       {
-        queryKey: ['accounts'],
-        queryFn: () => reqGetAccountList(router.query),
+        queryKey: ['accounts', query],
+        queryFn: () => reqGetAccountList(query),
       },
       {
         queryKey: ['users'],
@@ -47,13 +108,13 @@ const AccountList = () => {
   });
 
   useEffect(() => {
-    if (resAccounts.data && resUsers.data && list.length === 0) {
-      const usersMap = (resUsers.data as any).reduce((map, user: any) => {
+    if (resAccounts.data && resUsers.data) {
+      const usersMap = (resUsers.data.data as any).reduce((map, user: any) => {
         map.set(user.id, user);
         return map;
       }, new Map());
 
-      const accounts = resAccounts.data.map((account) => {
+      const accounts = resAccounts.data.data.map((account) => {
         const {
           id,
           userId,
@@ -88,11 +149,11 @@ const AccountList = () => {
           isActive: isActive ? '활성화' : '비활성화',
         };
       });
-
+      dispatch(setTotalPage(resAccounts.data.totalCount));
       setList(accounts);
     }
-  }, [resAccounts, resUsers]);
-
+  }, [resAccounts.data, resUsers.data]);
+  const dispatch = useDispatch();
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -136,7 +197,7 @@ const AccountList = () => {
   );
 };
 
-export default AccountList;
+export default AccountsTable;
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {

@@ -1,6 +1,6 @@
 import { IAuth } from '@src/models/IAuth';
-import { httpInstance } from '../httpInstance';
 import { API_URL } from '@src/types/enum';
+import httpInstance from '../httpInstance';
 
 interface ReqLogin {
   email: string;
