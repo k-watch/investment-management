@@ -65,8 +65,8 @@ const useAccountList = () => {
           router.query.isActive === undefined
             ? undefined
             : router.query.isActive === '활성화'
-            ? 'true'
-            : 'false',
+            ? true
+            : false,
         q: router.query.q,
       };
     }

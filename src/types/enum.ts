@@ -57,7 +57,3 @@ export const DEFAULT_SEO = {
 } as const;
 
 export type ApiUrlType = typeof API_URL[keyof typeof API_URL];
-export type BrokersFormatType =
-  typeof BROKER_FORMAT[keyof typeof BROKER_FORMAT];
-export type BrokerType = typeof BROKERS[keyof typeof BROKERS];
-export type AccountStatus = typeof ACCOUNT_STATUS[keyof typeof ACCOUNT_STATUS];

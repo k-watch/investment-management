@@ -11,6 +11,9 @@ export interface IUser {
   address: string;
   detailAddress: string;
   lastLogin: string;
+  allowMarketingPush: string;
+  isActive: boolean;
+  isStaff: boolean;
   createdAt: string;
   updatedAt: string;
 }
