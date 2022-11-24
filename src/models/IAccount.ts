@@ -2,8 +2,7 @@ export interface IAccount {
   id: number;
   userId: number;
   uuid: string;
-  brokerId: number;
-  brokerName: string;
+  brokerId: string;
   name: string;
   status: number;
   number: string;

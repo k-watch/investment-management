@@ -1,37 +1,33 @@
+import { useRouter } from 'next/router';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { Select as MuiSelect, SelectChangeEvent } from '@mui/material';
-import { useRouter } from 'next/router';
+
+import { queryParams } from '@src/utils/common';
 
 interface SelectProps {
   label: string;
-  state: string;
-  handleChange: (e: SelectChangeEvent) => void;
-  list: any[][];
   keyword: string;
+  state: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  list: any[][];
+  handleChange: (e: SelectChangeEvent) => void;
 }
 
 const Select = ({ label, state, handleChange, list, keyword }: SelectProps) => {
   const router = useRouter();
 
-  const handlea = (event: SelectChangeEvent) => {
+  const handleClick = (event: SelectChangeEvent) => {
     handleChange(event);
 
-    const path = router.asPath.split('?')[1];
-    const searchParams = new URLSearchParams(path);
-
-    searchParams.delete(keyword);
-    if (event.target.value) {
-      searchParams.set(keyword, event.target.value);
-    }
-    router.push(`${router.pathname}?${searchParams}`);
+    queryParams(router, keyword, event.target.value);
   };
 
   return (
     <FormControl sx={{ minWidth: 180 }} size="small">
       <InputLabel>{label}</InputLabel>
-      <MuiSelect value={state} label="증권사" onChange={handlea}>
+      <MuiSelect value={state} label="증권사" onChange={handleClick}>
         <MenuItem value="">선택 안함</MenuItem>
         {list.map(([key, value]) => [
           <MenuItem key={key} value={value}>

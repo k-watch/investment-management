@@ -1,22 +1,18 @@
-import { TextField } from '@mui/material';
+import { useRef } from 'react';
 import { useRouter } from 'next/router';
-import React, { useRef } from 'react';
+import { TextField } from '@mui/material';
+
+import { queryParams } from '@src/utils/common';
+import { QUERY_PARAM_KEYWORD } from '@src/types/enum';
 
 const AccountsSearch = () => {
   const router = useRouter();
 
-  const emailRef = useRef<any>();
+  const accountRef = useRef<HTMLInputElement>(null);
 
   const handleChange = () => {
-    if (emailRef.current) {
-      const path = router.asPath.split('?')[1];
-      const searchParams = new URLSearchParams(path);
-
-      searchParams.delete('q');
-      if (emailRef.current.value) {
-        searchParams.set('q', emailRef.current.value);
-      }
-      router.push(`${router.pathname}?${searchParams}`, undefined, {
+    if (accountRef.current) {
+      queryParams(router, QUERY_PARAM_KEYWORD.Q, accountRef.current.value, {
         shallow: true,
       });
     }
@@ -27,7 +23,7 @@ const AccountsSearch = () => {
       <TextField
         size="small"
         placeholder="계좌명 검색"
-        inputRef={emailRef}
+        inputRef={accountRef}
         variant="outlined"
         onChange={handleChange}
       />

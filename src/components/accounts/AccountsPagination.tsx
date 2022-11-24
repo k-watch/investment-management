@@ -1,17 +1,10 @@
-import { Pagination, SelectChangeEvent } from '@mui/material';
-import { accountsSelector } from '@src/store/accounts/accounts';
-import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import { Pagination } from '@mui/material';
 
-export const getParams = (query: { [key: string]: any }) =>
-  Object.keys(query).reduce((result: string, key: string) => {
-    if (!result) {
-      result += `?${key}=${query[key]}`;
-    } else {
-      result += `&${key}=${query[key]}`;
-    }
-    return result;
-  }, '');
+import { accountsSelector } from '@src/store/accounts/accounts';
+import { queryParams } from '@src/utils/common';
+import { QUERY_PARAM_KEYWORD } from '@src/types/enum';
 
 const AccountsPagination = () => {
   const { totalPage } = useSelector(accountsSelector);
@@ -19,14 +12,9 @@ const AccountsPagination = () => {
   const router = useRouter();
 
   const handleChange = (event: React.ChangeEvent<unknown>, page: number) => {
-    const path = router.asPath.split('?')[1];
-    const searchParams = new URLSearchParams(path);
-
-    searchParams.delete('page');
-    searchParams.set('page', page.toString());
-
-    router.push(`${router.pathname}?${searchParams}`);
+    queryParams(router, QUERY_PARAM_KEYWORD.PAGE, page.toString());
   };
+
   return <Pagination count={totalPage} onChange={handleChange} />;
 };
 

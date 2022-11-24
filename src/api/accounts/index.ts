@@ -1,14 +1,18 @@
 import { IAccount } from '@src/models/IAccount';
+import { IUser } from '@src/models/IUser';
+import { QueriesParmas } from '@src/types';
+import { cookieInstance } from '@src/utils/cookieinstance';
+
 import httpInstance from '../httpInstance';
 
-export const reqGetAccountList = async (queries: any) => {
-  console.log(queries);
+export const reqGetAccountList = async (queries: QueriesParmas) => {
+  const token = cookieInstance.get('token');
+
   const { headers, data } = await httpInstance.get<IAccount[]>(
     '/api/accounts',
     {
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFAMS4xIiwiaWF0IjoxNjY5MTM1NzM3LCJleHAiOjE2NjkxMzkzMzcsInN1YiI6IjEwMSJ9.5tMyGMLrTFHwpZypTZS2AV0ulXSO128wDUyxt18DHkY
-`,
+        Authorization: `Bearer ${token}`,
       },
       params: {
         _page: queries.page,
@@ -28,10 +32,11 @@ export const reqGetAccountList = async (queries: any) => {
 };
 
 export const reqGetUsers = async () => {
-  const { headers, data } = await httpInstance.get<IAccount[]>('/api/users', {
+  const token = cookieInstance.get('token');
+
+  const { headers, data } = await httpInstance.get<IUser[]>('/api/users', {
     headers: {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFAMS4xIiwiaWF0IjoxNjY5MTM1NzM3LCJleHAiOjE2NjkxMzkzMzcsInN1YiI6IjEwMSJ9.5tMyGMLrTFHwpZypTZS2AV0ulXSO128wDUyxt18DHkY
-`,
+      Authorization: `Bearer ${token}`,
     },
   });
 

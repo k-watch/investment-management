@@ -3,8 +3,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { IAuth } from '@src/models/IAuth';
 import httpInstance from '@src/api/httpInstance';
 
-const EXPIRED_TIME = 999999;
-
 interface LoginApiRequest extends NextApiRequest {
   body: {
     email: string;
@@ -30,10 +28,9 @@ export default async function handler(
       }
     );
 
-    const accessToken = data.accessToken;
+    // const accessToken = data.accessToken;
     // const expiredTime = EXPIRED_TIME;
 
-    res.setHeader('Set-Cookie', [`token=${accessToken}; HttpOnly; path=/;`]);
     res.status(200).json(data);
   } catch (e) {
     res.status(401).json({ status: 401, message: 'Invalid Email or Password' });
