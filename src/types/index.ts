@@ -1,5 +1,6 @@
 export interface QueriesParmas {
-  page: number;
+  page?: number;
+  id?: string | string[];
   broker?: number;
   status?: number;
   isActive?: boolean;

@@ -7,9 +7,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import useUsersTable from './hooks/useUsersTable';
+import { grey } from '@mui/material/colors';
 
 const UsersTable = () => {
-  const { list } = useUsersTable();
+  const { list, handleClick } = useUsersTable();
 
   return (
     <TableContainer component={Paper}>
@@ -31,7 +32,10 @@ const UsersTable = () => {
         <TableBody>
           {list &&
             list.map((user) => (
-              <StyledTableRow key={user.id}>
+              <StyledTableRow
+                key={user.id}
+                onClick={() => handleClick(user.id)}
+              >
                 <StyledTableCell align="center">{user.name}</StyledTableCell>
                 <StyledTableCell align="center">{user.email}</StyledTableCell>
                 <StyledTableCell align="center">
@@ -86,6 +90,13 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&.MuiTableRow-root': {
+    '&:hover': {
+      backgroundColor: grey[300],
+      cursor: 'pointer',
+    },
+  },
+
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
   },

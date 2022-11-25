@@ -5,7 +5,7 @@ import httpInstance from '../httpInstance';
 
 export const reqGetUsers = async (queries?: QueriesParmas) => {
   const token = cookieInstance.get('token');
-  console.log(queries?.q);
+
   const { headers, data } = await httpInstance.get<IUser[]>('/api/users', {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -23,4 +23,19 @@ export const reqGetUsers = async (queries?: QueriesParmas) => {
     totalCount: headers['x-total-count'] || 0,
     data,
   };
+};
+
+export const reqGetUser = async (queries: QueriesParmas) => {
+  const token = cookieInstance.get('token');
+
+  const { data } = await httpInstance.get<IUser[]>('/api/users', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    params: {
+      id: queries.id,
+    },
+  });
+
+  return data;
 };

@@ -109,7 +109,11 @@ const useUsersTable = () => {
     }
   }, [data, dispatch]);
 
-  return { list };
+  const handleClick = (id: number) => {
+    router.push(`/user?id=${id}`);
+  };
+
+  return { list, handleClick };
 };
 
 export default useUsersTable;
