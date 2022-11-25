@@ -16,7 +16,7 @@ const useLoginQuery = () => {
       if (data) {
         cookieInstance.set('token', data.accessToken);
         dispatch(setAuth(data.user));
-        router.push(NAVIGATE_URL.MAIN);
+        router.push(NAVIGATE_URL.ACCOUNT);
       }
     },
   });

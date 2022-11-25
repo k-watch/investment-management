@@ -1,6 +1,7 @@
 import { IAccount } from '@src/models/IAccount';
 import { IUser } from '@src/models/IUser';
 import { QueriesParmas } from '@src/types';
+import { PAGE_LIMIT } from '@src/types/enum';
 import { cookieInstance } from '@src/utils/cookieinstance';
 
 import httpInstance from '../httpInstance';
@@ -16,7 +17,7 @@ export const reqGetAccountList = async (queries: QueriesParmas) => {
       },
       params: {
         _page: queries.page,
-        _limit: 15,
+        _limit: PAGE_LIMIT,
         brokerId: queries.broker,
         status: queries.status,
         isActive: queries.isActive,

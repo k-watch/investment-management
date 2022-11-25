@@ -1,11 +1,12 @@
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import { styled } from '@mui/material/styles';
+import { blueGrey } from '@mui/material/colors';
 
 import useAccountList from './hooks/useAccountsTable';
 
@@ -14,90 +15,76 @@ const AccountsTable = () => {
 
   return (
     <TableContainer component={Paper}>
-      <StyledTable aria-label="customized table">
+      <S.Table>
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center">고객명</StyledTableCell>
-            <StyledTableCell align="center">증권사</StyledTableCell>
-            <StyledTableCell align="center">계좌번호</StyledTableCell>
-            <StyledTableCell align="center">계좌상태</StyledTableCell>
-            <StyledTableCell align="center">계좌명</StyledTableCell>
-            <StyledTableCell align="center">평가금액</StyledTableCell>
-            <StyledTableCell align="center">입금금액</StyledTableCell>
-            <StyledTableCell align="center">계좌활성화여부</StyledTableCell>
-            <StyledTableCell align="center">계좌개설일</StyledTableCell>
+            <S.TableCell align="center">고객명</S.TableCell>
+            <S.TableCell align="center">증권사</S.TableCell>
+            <S.TableCell align="center">계좌번호</S.TableCell>
+            <S.TableCell align="center">계좌상태</S.TableCell>
+            <S.TableCell align="center">계좌명</S.TableCell>
+            <S.TableCell align="center">평가금액</S.TableCell>
+            <S.TableCell align="center">입금금액</S.TableCell>
+            <S.TableCell align="center">계좌활성화여부</S.TableCell>
+            <S.TableCell align="center">계좌개설일</S.TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {list &&
             list.map((account) => (
-              <StyledTableRow key={account.id}>
-                <StyledTableCell align="center">
-                  {account.userName}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {account.brokerName}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {account.number}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {account.status}
-                </StyledTableCell>
-                <StyledTableCell align="center">{account.name}</StyledTableCell>
-                <StyledTableCell className={account.assetColor} align="right">
+              <S.TableRow key={account.id}>
+                <S.TableCell align="center">{account.userName}</S.TableCell>
+                <S.TableCell align="center">{account.brokerName}</S.TableCell>
+                <S.TableCell align="center">{account.number}</S.TableCell>
+                <S.TableCell align="center">{account.status}</S.TableCell>
+                <S.TableCell align="center">{account.name}</S.TableCell>
+                <S.TableCell className={account.assetColor} align="right">
                   {account.assets}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {account.payments}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {account.isActive}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {account.createdAt}
-                </StyledTableCell>
-              </StyledTableRow>
+                </S.TableCell>
+                <S.TableCell align="right">{account.payments}</S.TableCell>
+                <S.TableCell align="center">{account.isActive}</S.TableCell>
+                <S.TableCell align="center">{account.createdAt}</S.TableCell>
+              </S.TableRow>
             ))}
         </TableBody>
-      </StyledTable>
+      </S.Table>
     </TableContainer>
   );
 };
 
 export default AccountsTable;
 
-const StyledTable = styled(Table)(() => ({
-  '&.MuiTable-root': {
-    width: '100%',
-  },
-}));
+const S = {
+  Table: styled(Table)(() => ({
+    '&.MuiTable-root': {
+      width: '100%',
+    },
+  })),
+  TableCell: styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: `${blueGrey[900]}`,
+      color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+    '&.MuiTableCell-body': {
+      '&.revenue': {
+        color: 'blue',
+      },
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-  '&.MuiTableCell-body': {
-    '&.revenue': {
-      color: 'blue',
+      '&.loss': {
+        color: 'red',
+      },
+    },
+  })),
+  TableRow: styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
     },
 
-    '&.loss': {
-      color: 'red',
+    '&:last-child td, &:last-child th': {
+      border: 0,
     },
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
+  })),
+};

@@ -7,8 +7,10 @@ export const API_URL = {
 export const ACCESS_TOKEN = 'accessToken';
 
 export const NAVIGATE_URL = {
-  MAIN: '/',
   LOGIN: '/login',
+  ACCOUNT: '/accounts',
+  USERS: '/users',
+  USER: '/user',
 } as const;
 
 export const QUERY_PARAM_KEYWORD = {
@@ -16,24 +18,7 @@ export const QUERY_PARAM_KEYWORD = {
   Q: 'q',
 } as const;
 
-export const SIDER = [
-  { id: 1, name: '대시보드', keyword: 'dashboard' },
-  { id: 2, name: '계좌 목록', keyword: 'accounts' },
-  { id: 3, name: '사용자 목록', keyword: 'users' },
-  { id: 9999, name: '로그아웃', keyword: 'logout' },
-] as const;
-
-export const ACCOUNT_COLUMN = [
-  '고객명',
-  '증권사',
-  '계좌번호',
-  '계좌상태',
-  '계좌명',
-  '평가금액',
-  '입금금액',
-  '계좌활성여부',
-  '계좌개설일',
-] as const;
+export const PAGE_LIMIT = 12;
 
 export const DEFAULT_SEO = {
   title: '알티모빌리티 - 차량대여 서비스',

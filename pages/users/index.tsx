@@ -11,7 +11,7 @@ const UsersPage = () => {
   return (
     <div>
       <UsersSelect />
-      <Search />
+      <Search placeholder="사용자 검색" />
       <UsersTable />
       <Pagination />
     </div>

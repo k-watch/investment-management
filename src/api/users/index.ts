@@ -1,5 +1,6 @@
 import { IUser } from '@src/models/IUser';
 import { QueriesParmas } from '@src/types';
+import { PAGE_LIMIT } from '@src/types/enum';
 import { cookieInstance } from '@src/utils/cookieinstance';
 import httpInstance from '../httpInstance';
 
@@ -12,7 +13,7 @@ export const reqGetUsers = async (queries?: QueriesParmas) => {
     },
     params: {
       _page: queries?.page,
-      _limit: 15,
+      _limit: PAGE_LIMIT,
       isActive: queries?.isActive,
       isStaff: queries?.isStaff,
       q: queries?.q,

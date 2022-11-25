@@ -1,19 +1,22 @@
 import httpInstance from '@src/api/httpInstance';
-import AccountsPagination from '@src/components/accounts/AccountsPagination';
-import AccountsSearch from '@src/components/accounts/AccountsSearch';
 import AccountsSelect from '@src/components/accounts/AccountsSelect';
 import AccountsTable from '@src/components/accounts/AccountsTable';
+import Search from '@src/components/common/Search';
 import { IAccount } from '@src/models/IAccount';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { styled } from '@mui/material';
+import Pagination from '@src/components/common/Pagination';
 
 const AccountListPage = () => {
   return (
     <div>
-      <AccountsSearch />
-      <AccountsSelect />
+      <S.Header>
+        <AccountsSelect />
+        <Search placeholder="계좌명 검색" />
+      </S.Header>
       <AccountsTable />
-      <AccountsPagination />
+      <Pagination />
     </div>
   );
 };
@@ -91,4 +94,11 @@ export const getServerSideProps = async (context: any) => {
   return {
     props: { dehydratedState: dehydrate(queryClient) },
   };
+};
+
+const S = {
+  Header: styled('div')(() => ({
+    display: 'flex',
+    marginBottom: 30,
+  })),
 };

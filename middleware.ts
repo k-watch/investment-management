@@ -7,14 +7,14 @@ export const middleware = (request: NextRequest) => {
 
   // 로그인 여부를 체크
   if (isAuthenticated) {
-    if (pathName === '/login') {
-      return NextResponse.redirect(new URL(NAVIGATE_URL.MAIN, request.url));
+    if (pathName === NAVIGATE_URL.LOGIN || pathName === '/') {
+      return NextResponse.redirect(new URL(NAVIGATE_URL.ACCOUNT, request.url));
     } else {
       return NextResponse.next();
     }
   }
 
-  if (pathName !== '/login') {
+  if (pathName !== NAVIGATE_URL.LOGIN) {
     return NextResponse.redirect(new URL(NAVIGATE_URL.LOGIN, request.url));
   }
 

@@ -3,6 +3,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { Select as MuiSelect, SelectChangeEvent } from '@mui/material';
+import { styled } from '@mui/material';
 
 import { queryParams } from '@src/utils/common';
 
@@ -24,7 +25,7 @@ const Select = ({ label, state, handleChange, list, keyword }: SelectProps) => {
   };
 
   return (
-    <FormControl sx={{ minWidth: 180 }} size="small">
+    <S.FormControl size="small">
       <InputLabel>{label}</InputLabel>
       <MuiSelect value={state} label="증권사" onChange={handleClick}>
         <MenuItem value="">선택 안함</MenuItem>
@@ -34,8 +35,15 @@ const Select = ({ label, state, handleChange, list, keyword }: SelectProps) => {
           </MenuItem>,
         ])}
       </MuiSelect>
-    </FormControl>
+    </S.FormControl>
   );
 };
 
 export default Select;
+
+const S = {
+  FormControl: styled(FormControl)(() => ({
+    minWidth: 170,
+    marginRight: 2,
+  })),
+};

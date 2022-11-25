@@ -97,7 +97,15 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           </ListItem>
         </List>
       </Drawer>
-      <div style={{ width: '100%', marginTop: 75 }}>{children}</div>
+      <div
+        style={{
+          width: '100%',
+          padding: '78px 30px 30px 30px',
+          backgroundColor: `${grey[100]}`,
+        }}
+      >
+        {children}
+      </div>
     </Box>
   );
 };
