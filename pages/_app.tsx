@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   QueryClient,
   QueryClientProvider,
@@ -15,16 +14,25 @@ import theme from '@src/styles/theme';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { store } from '@src/store';
 import { Global } from '@emotion/react';
+import { ComponentType, ReactElement, ReactNode } from 'react';
+import type { AppInitialProps } from 'next/app';
+import Layout from '@src/components/common/Layout';
 
 const clientSideEmotionCache = createEmotionCache();
 
+type NextPageWithLayout = ComponentType<AppInitialProps> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
 interface MyAppProps extends AppProps {
+  Component: NextPageWithLayout;
   emotionCache?: EmotionCache;
 }
 const queryClient = new QueryClient();
 
 const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>);
 
   return (
     <>
@@ -36,7 +44,7 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
               <ReactQueryDevtools initialIsOpen={false} />
               <CssBaseline />
               <Provider store={store}>
-                <Component {...pageProps} />
+                {getLayout(<Component {...pageProps} />)}
               </Provider>
             </Hydrate>
           </QueryClientProvider>

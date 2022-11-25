@@ -14,7 +14,7 @@ const AccountsTable = () => {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+      <StyledTable aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell align="center">고객명</StyledTableCell>
@@ -60,12 +60,18 @@ const AccountsTable = () => {
               </StyledTableRow>
             ))}
         </TableBody>
-      </Table>
+      </StyledTable>
     </TableContainer>
   );
 };
 
 export default AccountsTable;
+
+const StyledTable = styled(Table)(() => ({
+  '&.MuiTable-root': {
+    width: '100%',
+  },
+}));
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
