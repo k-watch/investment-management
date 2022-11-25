@@ -1,3 +1,5 @@
+import Button from '@mui/material/Button';
+
 import useUserDetail from './hooks/useUserDetail';
 
 import UserDialog from './UserDialog';
@@ -10,17 +12,29 @@ const UserDetail = () => {
 
   return (
     <div>
-      <UserDialog
-        name={user?.name}
-        email={user?.email}
-        age={user?.age}
-        gender={user?.genderOrigin}
-        birth={user?.birthDate}
-        phone={user?.phoneNumber}
-        isStaff={user?.isStaff}
-      />
-      <button onClick={() => reqDeleteUser(user.id)}>삭제</button>
-      {user && <UserTable user={user} />}
+      {user && (
+        <>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              marginBottom: 30,
+            }}
+          >
+            <Button
+              sx={{ fontWeight: 700, marginRight: 2 }}
+              variant="outlined"
+              color="error"
+              onClick={() => reqDeleteUser(user.id)}
+            >
+              삭제하기
+            </Button>
+
+            <UserDialog user={user} />
+          </div>
+          <UserTable user={user} />
+        </>
+      )}
       {accounts && <UserAccountTable accounts={[...accounts]} />}
     </div>
   );

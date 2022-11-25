@@ -23,18 +23,18 @@ import useUserQuery from '../api/useUserQuery';
 // createdAt: 가입일
 // ********************
 export interface UserDetailProps {
-  id: number;
+  id?: number;
   name: string;
   email: string;
   age: number;
-  genderOrigin: string;
+  genderOrigin?: string;
   birthDate: string;
   phoneNumber: string;
-  lastLogin: string;
-  allowMarketingPush: string;
-  isActive: string;
-  isStaff: string;
-  createdAt: string;
+  lastLogin?: string;
+  allowMarketingPush?: string;
+  isActive?: string;
+  isStaff?: string;
+  createdAt?: string;
 }
 
 // ********************

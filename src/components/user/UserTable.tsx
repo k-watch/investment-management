@@ -77,13 +77,6 @@ const S = {
     },
   })),
   TableRow: styled(TableRow)(({ theme }) => ({
-    '&.MuiTableRow-root': {
-      '&:hover': {
-        backgroundColor: grey[300],
-        cursor: 'pointer',
-      },
-    },
-
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,
     },
