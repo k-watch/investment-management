@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import Select from '../accounts/common/Select';
+import Select from '../common/Select';
 
 const activeList = [
   ['true', '활성화'],

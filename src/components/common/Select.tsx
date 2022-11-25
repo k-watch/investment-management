@@ -27,7 +27,7 @@ const Select = ({ label, state, handleChange, list, keyword }: SelectProps) => {
   return (
     <S.FormControl size="small">
       <InputLabel>{label}</InputLabel>
-      <MuiSelect value={state} label="증권사" onChange={handleClick}>
+      <MuiSelect value={state} onChange={handleClick}>
         <MenuItem value="">선택 안함</MenuItem>
         {list.map(([key, value]) => [
           <MenuItem key={key} value={value}>
@@ -44,6 +44,6 @@ export default Select;
 const S = {
   FormControl: styled(FormControl)(() => ({
     minWidth: 170,
-    marginRight: 2,
+    marginRight: 20,
   })),
 };

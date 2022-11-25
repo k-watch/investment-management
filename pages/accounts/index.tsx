@@ -1,23 +1,24 @@
-import httpInstance from '@src/api/httpInstance';
+import { AxiosError } from 'axios';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { styled } from '@mui/material';
+
 import AccountsSelect from '@src/components/accounts/AccountsSelect';
 import AccountsTable from '@src/components/accounts/AccountsTable';
 import Search from '@src/components/common/Search';
-import { IAccount } from '@src/models/IAccount';
-import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
-import { styled } from '@mui/material';
 import Pagination from '@src/components/common/Pagination';
+import httpInstance from '@src/api/httpInstance';
+import { IAccount } from '@src/models/IAccount';
 
 const AccountListPage = () => {
   return (
-    <div>
+    <>
       <S.Header>
         <AccountsSelect />
         <Search placeholder="계좌명 검색" />
       </S.Header>
       <AccountsTable />
       <Pagination />
-    </div>
+    </>
   );
 };
 

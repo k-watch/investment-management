@@ -1,20 +1,26 @@
-import httpInstance from '@src/api/httpInstance';
-import { IUser } from '@src/models/IUser';
-import { dehydrate, QueryClient } from '@tanstack/react-query';
+import Head from 'next/head';
 import { AxiosError } from 'axios';
-import UsersTable from '@src/components/users/UsersTable';
-import Pagination from '@src/components/common/Pagination';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { styled } from '@mui/material';
+
 import UsersSelect from '@src/components/users/UsersSelect';
 import Search from '@src/components/common/Search';
+import UsersTable from '@src/components/users/UsersTable';
+import Pagination from '@src/components/common/Pagination';
+import httpInstance from '@src/api/httpInstance';
+import { IUser } from '@src/models/IUser';
 
 const UsersPage = () => {
   return (
-    <div>
-      <UsersSelect />
-      <Search placeholder="사용자 검색" />
+    <>
+      <Head>사용자 목록</Head>
+      <S.Header>
+        <UsersSelect />
+        <Search placeholder="사용자 검색" />
+      </S.Header>
       <UsersTable />
       <Pagination />
-    </div>
+    </>
   );
 };
 
@@ -65,4 +71,11 @@ export const getServerSideProps = async (context: any) => {
   return {
     props: { dehydratedState: dehydrate(queryClient) },
   };
+};
+
+const S = {
+  Header: styled('div')(() => ({
+    display: 'flex',
+    marginBottom: 30,
+  })),
 };
