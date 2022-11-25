@@ -2,13 +2,16 @@ import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 
-import { getMapValue } from '@src/utils/common';
+import {
+  convertNumberFormat,
+  getMapValue,
+  initAssetColor,
+} from '@src/utils/common';
 import { setTotalPage } from '@src/store/accounts/accounts';
 import { QueriesParmas } from '@src/types';
 
 import { brokerMap, statusMap } from '../types';
 import useAccountsQuery from '../api/useAccountsQuery';
-import { convertNumberFormat } from '../utils';
 
 // ********************
 // AccountsTableProps
@@ -39,14 +42,6 @@ interface AccountsTableProps {
   isActive: string;
   createdAt: string;
 }
-
-const setAssetColor = (assets: string, payments: string) => {
-  return assets === payments
-    ? undefined
-    : assets > payments
-    ? 'revenue'
-    : 'loss';
-};
 
 const useAccountList = () => {
   const router = useRouter();
@@ -109,7 +104,7 @@ const useAccountList = () => {
           number: convertNumberFormat(Number(brokerId), convertNumber),
           status: statusMap.get(status),
           name,
-          assetColor: setAssetColor(assets, payments),
+          assetColor: initAssetColor(assets, payments),
           assets: Math.ceil(Number(assets)).toLocaleString() + ' 원',
           payments: Math.ceil(Number(payments)).toLocaleString() + ' 원',
           isActive: isActive ? '활성화' : '비활성화',

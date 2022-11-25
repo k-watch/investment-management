@@ -1,25 +1,77 @@
-import { IUser } from './../../../models/IUser';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import useUserQuery from '../api/useUserQuery';
-import { IAccount } from '@src/models/IAccount';
-import { brokerMap, statusMap } from '@src/components/accounts/types';
-import { convertNumberFormat } from '@src/components/accounts/utils';
 
-const setAssetColor = (assets: string, payments: string) => {
-  return assets === payments
-    ? undefined
-    : assets > payments
-    ? 'revenue'
-    : 'loss';
-};
+import { brokerMap, statusMap } from '@src/components/accounts/types';
+import { convertNumberFormat, initAssetColor } from '@src/utils/common';
+
+import useUserQuery from '../api/useUserQuery';
+
+// ********************
+// UsersTableProps
+// id: 고객 ID
+// name: 고객명
+// email: 이메일
+// age: 생일
+// genderOrigin: 성별
+// birthDate: 생년월일
+// phoneNumber: 휴대폰 번호
+// lastLogin: 최근 로그인
+// allowMarketingPush: 혜택수신 동의 여부
+// payments: 입금금액
+// isActive: 활성화 여부
+// isStaff: 임직원 여부
+// createdAt: 가입일
+// ********************
+export interface UserDetailProps {
+  id: number;
+  name: string;
+  email: string;
+  age: number;
+  genderOrigin: string;
+  birthDate: string;
+  phoneNumber: string;
+  lastLogin: string;
+  allowMarketingPush: string;
+  isActive: string;
+  isStaff: string;
+  createdAt: string;
+}
+
+// ********************
+// AccountsTableProps
+// id: 계좌 ID
+// userId: 계좌주 ID
+// brokerName: 증권사
+// number: 계좌번호
+// status: 계좌상태
+// name: 계좌명
+// assetColor: 평가금액과 입금금액 손익 상태
+// assets: 평가금액
+// payments: 입금금액
+// isActive: 계좌활성여부
+// createdAt: 계좌개설일
+// ********************
+export interface AccountsTableProps {
+  id: number;
+  userId: number;
+  brokerName: string | undefined;
+  number: string;
+  status: string | undefined;
+  name: string;
+  assetColor: string | undefined;
+  assets: string;
+  payments: string;
+  isActive: string;
+  createdAt: string;
+}
 
 const useUserDetail = () => {
   const router = useRouter();
+
   const queries = useRef('');
 
-  const [user, setUser] = useState<IUser>();
-  const [accountList, setAccountList] = useState<IAccount[]>();
+  const [user, setUser] = useState<UserDetailProps>();
+  const [accounts, setAccounts] = useState<AccountsTableProps[]>();
 
   useEffect(() => {
     if (router.query) {
@@ -30,66 +82,56 @@ const useUserDetail = () => {
   const { resAccounts, resUsers } = useUserQuery({ id: queries.current });
 
   useEffect(() => {
-    if (resAccounts.data && resUsers) {
+    if (resAccounts.data && resUsers.data) {
       const { data: accountsData } = resAccounts.data;
       const { data: userData } = resUsers;
 
       setUser({
-        id: userData?.id,
-        name: userData?.name,
-        email: userData?.email,
-        age: userData?.age,
+        id: userData.id,
+        name: userData.name,
+        email: userData.email,
+        age: userData.age,
         genderOrigin:
-          userData?.genderOrigin === 1 || userData?.genderOrigin === 3
+          userData.genderOrigin === 1 || userData?.genderOrigin === 3
             ? '남'
             : '여',
-        birthDate: userData?.birthDate.slice(0, 10),
-        phoneNumber: userData?.phoneNumber,
-        lastLogin: userData?.lastLogin.slice(0, 10),
-        allowMarketingPush: userData?.allowMarketingPush ? 'O' : 'X',
-        isActive: userData?.isActive ? '활성화' : '비활성화',
-        isStaff: userData?.isStaff ? '임직원' : '일반',
-        createdAt: userData?.createdAt.slice(0, 10),
+        birthDate: userData.birthDate.slice(0, 10),
+        phoneNumber: userData.phoneNumber,
+        lastLogin: userData.lastLogin.slice(0, 10),
+        allowMarketingPush: userData.allowMarketingPush ? 'O' : 'X',
+        isActive: userData.isActive ? '활성화' : '비활성화',
+        isStaff: userData.isStaff ? '임직원' : '일반',
+        createdAt: userData.createdAt.slice(0, 10),
       });
 
-      const accounts = accountsData.map((account) => {
-        const {
-          id,
-          userId,
-          brokerId,
-          number,
-          status,
-          name,
-          assets,
-          payments,
-          isActive,
-          createdAt,
-        } = account;
-
+      const accountList = accountsData.map((account) => {
         const convertNumber =
-          number.slice(0, 2) +
-          number.slice(2, number.length - 2).replace(/[0-9]/g, '*') +
-          number.slice(-2);
+          account.number.slice(0, 2) +
+          account.number
+            .slice(2, account.number.length - 2)
+            .replace(/[0-9]/g, '*') +
+          account.number.slice(-2);
 
         return {
-          id,
-          userId,
-          brokerName: brokerMap.get(Number(brokerId)),
-          number: convertNumberFormat(Number(brokerId), convertNumber),
-          status: statusMap.get(status),
-          name,
-          assetColor: setAssetColor(assets, payments),
-          assets: Math.ceil(Number(assets)).toLocaleString() + ' 원',
-          payments: Math.ceil(Number(payments)).toLocaleString() + ' 원',
-          isActive: isActive ? '활성화' : '비활성화',
-          createdAt: createdAt.slice(0, 10),
+          id: account.id,
+          userId: account.userId,
+          brokerName: brokerMap.get(Number(account.brokerId)),
+          number: convertNumberFormat(Number(account.brokerId), convertNumber),
+          status: statusMap.get(account.status),
+          name: account.name,
+          assetColor: initAssetColor(account.assets, account.payments),
+          assets: Math.ceil(Number(account.assets)).toLocaleString() + ' 원',
+          payments:
+            Math.ceil(Number(account.payments)).toLocaleString() + ' 원',
+          isActive: account.isActive ? '활성화' : '비활성화',
+          createdAt: account.createdAt.slice(0, 10),
         };
       });
-      setAccountList(accounts);
+      setAccounts(accountList);
     }
   }, [resAccounts.isFetched, resUsers.isFetched]);
 
-  return { user, accountList };
+  return { user, accounts };
 };
 
 export default useUserDetail;

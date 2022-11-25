@@ -1,5 +1,7 @@
 import { NextRouter } from 'next/router';
 
+import { numberFormatMap } from '@src/types';
+
 interface TransitionOptions {
   shallow?: boolean;
   locale?: string | false;
@@ -35,4 +37,23 @@ export const getMapValue = <K, V>(
       return key;
     }
   }
+};
+
+export const convertNumberFormat = (key: number, accountNumber: string) => {
+  const content = numberFormatMap.get(key);
+  if (content) {
+    const [reg, expression] = content;
+    const regex = new RegExp(reg);
+    return accountNumber.replace(regex, expression);
+  }
+
+  return accountNumber;
+};
+
+export const initAssetColor = (assets: string, payments: string) => {
+  return assets === payments
+    ? undefined
+    : assets > payments
+    ? 'revenue'
+    : 'loss';
 };

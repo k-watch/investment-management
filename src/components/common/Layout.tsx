@@ -100,6 +100,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div
         style={{
           width: '100%',
+          height: '100vh',
           padding: '78px 30px 30px 30px',
           backgroundColor: `${grey[100]}`,
         }}
