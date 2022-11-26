@@ -1,7 +1,7 @@
 import { IUser } from '@src/models/IUser';
 import { QueriesParmas } from '@src/types';
 import { PAGE_LIMIT } from '@src/types/enum';
-import { cookieInstance } from '@src/utils/cookieinstance';
+import { cookieInstance } from '@src/utils/cookieInstance';
 
 import httpInstance from '../httpInstance';
 

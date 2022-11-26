@@ -1,7 +1,7 @@
 import { UserFormProps } from '@src/components/user/hooks/useUserDialog';
 import { IAccount } from '@src/models/IAccount';
 import { IUser } from '@src/models/IUser';
-import { cookieInstance } from '@src/utils/cookieinstance';
+import { cookieInstance } from '@src/utils/cookieInstance';
 
 import httpInstance from '../httpInstance';
 

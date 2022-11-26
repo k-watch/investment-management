@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useMutation } from '@tanstack/react-query';
 
 import { reqLogin } from '@src/api/login';
-import { cookieInstance } from '@src/utils/cookieinstance';
+import { cookieInstance } from '@src/utils/cookieInstance';
 import { NAVIGATE_URL } from '@src/types/enum';
 
 const useLoginQuery = () => {
