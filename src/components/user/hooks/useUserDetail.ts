@@ -1,29 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
 
 import { brokerMap, statusMap } from '@src/components/accounts/types';
 import { convertNumberFormat, initAssetColor } from '@src/utils/common';
+import { IAccount } from '@src/models/IAccount';
 
-import useUserQuery from '../api/useUserQuery';
+import useGetUserQuery from '../api/useGetUserQuery';
 
-// ********************
-// UsersTableProps
-// id: 고객 ID
-// name: 고객명
-// email: 이메일
-// age: 생일
-// genderOrigin: 성별
-// birthDate: 생년월일
-// phoneNumber: 휴대폰 번호
-// lastLogin: 최근 로그인
-// allowMarketingPush: 혜택수신 동의 여부
-// payments: 입금금액
-// isActive: 활성화 여부
-// isStaff: 임직원 여부
-// createdAt: 가입일
-// ********************
 export interface UserDetailProps {
-  id?: number;
+  id: number;
   name: string;
   email: string;
   age: number;
@@ -37,20 +22,6 @@ export interface UserDetailProps {
   createdAt?: string;
 }
 
-// ********************
-// AccountsTableProps
-// id: 계좌 ID
-// userId: 계좌주 ID
-// brokerName: 증권사
-// number: 계좌번호
-// status: 계좌상태
-// name: 계좌명
-// assetColor: 평가금액과 입금금액 손익 상태
-// assets: 평가금액
-// payments: 입금금액
-// isActive: 계좌활성여부
-// createdAt: 계좌개설일
-// ********************
 export interface AccountsTableProps {
   id: number;
   userId: number;
@@ -79,11 +50,10 @@ const useUserDetail = () => {
     }
   }, [router.query]);
 
-  const { resAccounts, resUsers } = useUserQuery({ id: queries.current });
+  const { resUsers, resAccounts } = useGetUserQuery(router.query.id as string);
 
   useEffect(() => {
-    if (resAccounts.data && resUsers.data) {
-      const { data: accountsData } = resAccounts.data;
+    if (resUsers.data) {
       const { data: userData } = resUsers;
 
       setUser({
@@ -103,8 +73,14 @@ const useUserDetail = () => {
         isStaff: userData.isStaff ? '임직원' : '일반',
         createdAt: userData.createdAt.slice(0, 10),
       });
+    }
+  }, [resUsers.isFetched, resUsers.data]);
 
-      const accountList = accountsData.map((account) => {
+  useEffect(() => {
+    if (resAccounts.data) {
+      const { data: accountsData } = resAccounts;
+
+      const accountList = accountsData.map((account: IAccount) => {
         const convertNumber =
           account.number.slice(0, 2) +
           account.number
@@ -129,7 +105,7 @@ const useUserDetail = () => {
       });
       setAccounts(accountList);
     }
-  }, [resAccounts.isFetched, resUsers.isFetched]);
+  }, [resAccounts.isFetched, resAccounts.data]);
 
   return { user, accounts };
 };

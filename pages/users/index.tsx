@@ -13,7 +13,9 @@ import { IUser } from '@src/models/IUser';
 const UsersPage = () => {
   return (
     <>
-      <Head>사용자 목록</Head>
+      <Head>
+        <title>사용자 목록</title>
+      </Head>
       <S.Header>
         <UsersSelect />
         <Search placeholder="사용자 검색" />
@@ -56,7 +58,10 @@ export const getServerSideProps = async (context: any) => {
           data,
         };
       } catch (e) {
-        if (e instanceof AxiosError) {
+        if (e instanceof AxiosError && e.response?.status === 401) {
+          context.res.setHeader('Set-Cookie', [
+            `token=expired; Max-Age=0; Path=/`,
+          ]);
           return {
             redirect: {
               destination: '/login',

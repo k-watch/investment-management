@@ -16,6 +16,7 @@ import { store } from '@src/store';
 import { Global } from '@emotion/react';
 import { ComponentType, ReactElement, ReactNode } from 'react';
 import type { AppInitialProps } from 'next/app';
+
 import Layout from '@src/components/common/Layout';
 
 const clientSideEmotionCache = createEmotionCache();
@@ -28,7 +29,13 @@ interface MyAppProps extends AppProps {
   Component: NextPageWithLayout;
   emotionCache?: EmotionCache;
 }
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;

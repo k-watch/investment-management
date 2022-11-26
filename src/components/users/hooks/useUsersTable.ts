@@ -1,24 +1,13 @@
-import { setTotalPage } from '@src/store/accounts/accounts';
-import { QueriesParmas } from '@src/types';
-import { useRouter } from 'next/router';
 import { useMemo, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+
+import { setTotalPage } from '@src/store/accounts/accounts';
+import { QueriesParmas } from '@src/types';
+
 import useUsersQuery from '../api/useUsersQuery';
-// ********************
-// UsersTableProps
-// id: 고객 ID
-// name: 고객명
-// email: 이메일
-// genderOrigin: 성별
-// birthDate: 생년월일
-// phoneNumber: 휴대폰 번호
-// lastLogin: 최근 로그인
-// allowMarketingPush: 혜택수신 동의 여부
-// payments: 입금금액
-// isActive: 활성화 여부
-// isStaff: 임직원 여부
-// createdAt: 가입일
-// ********************
+import { convertSecretName, maskingPhoneNum } from '../util';
+
 interface UsersTableProps {
   id: number;
   name: string;
@@ -33,23 +22,6 @@ interface UsersTableProps {
   createdAt: string;
 }
 
-const convertSecretName = (name: string) => {
-  const nameArr = name.split('');
-  let parsedName = '';
-  nameArr.forEach((n, i) => {
-    if (i === 0 || (i === nameArr.length - 1 && i !== 1) || n === ' ')
-      parsedName += n;
-    else parsedName += '*';
-  });
-  return parsedName;
-};
-
-export const maskingPhoneNum = (number: string) => {
-  const splited = number.split('-');
-  splited[1] = splited[1].replace(/./g, '*');
-  return splited.join('-');
-};
-
 const useUsersTable = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -59,7 +31,7 @@ const useUsersTable = () => {
   const queries: QueriesParmas = useMemo(() => {
     if (router.query) {
       return {
-        page: Number(router.query.page),
+        page: router.query.page ? Number(router.query.page) : 1,
         isActive:
           router.query.isActive === undefined
             ? undefined

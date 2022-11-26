@@ -20,6 +20,7 @@ const useAccountsQuery = (query: QueriesParmas) => {
         queryKey: ['users'],
         queryFn: () => reqGetUsers(),
         select: ({ data }: SelectParams<IUser[]>) => {
+          if (!data) return undefined;
           return {
             // 계좌주 표현을 위해 user name 만 추출
             ...data,

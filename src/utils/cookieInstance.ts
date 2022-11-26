@@ -3,6 +3,7 @@ import { Cookies } from 'react-cookie';
 interface ICookieInstance {
   get: (key: string) => unknown;
   set: (key: string, value: string) => void;
+  remove: (key: string) => void;
 }
 
 class CookieInstance implements ICookieInstance {
@@ -18,6 +19,10 @@ class CookieInstance implements ICookieInstance {
 
   set(key: string, value: string) {
     return this.instance.set(key, value);
+  }
+
+  remove(key: string) {
+    this.instance.remove(key);
   }
 }
 

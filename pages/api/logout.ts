@@ -8,6 +8,6 @@ export default async function handler(
     return res.status(405).json({ status: 405, message: 'Not allowed method' });
   }
 
-  res.setHeader('Set-Cookie', [`token=null; HttpOnly; path=/; max-age=0;`]);
+  res.setHeader('Set-Cookie', [`token=expired; HttpOnly; path=/; max-age=0;`]);
   res.send(null);
 }

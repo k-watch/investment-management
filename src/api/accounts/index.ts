@@ -46,20 +46,3 @@ export const reqGetUsers = async () => {
     data,
   };
 };
-
-export const reqGetUserAccountList = async (queries: QueriesParmas) => {
-  const token = cookieInstance.get('token');
-
-  const { data } = await httpInstance.get<IAccount[]>('/api/accounts', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    params: {
-      userId: queries.id,
-    },
-  });
-
-  return {
-    data,
-  };
-};

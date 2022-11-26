@@ -13,21 +13,6 @@ import { QueriesParmas } from '@src/types';
 import { brokerMap, statusMap } from '../types';
 import useAccountsQuery from '../api/useAccountsQuery';
 
-// ********************
-// AccountsTableProps
-// id: 계좌 ID
-// userId: 계좌주 ID
-// userName: 계좌주
-// brokerName: 증권사
-// number: 계좌번호
-// status: 계좌상태
-// name: 계좌명
-// assetColor: 평가금액과 입금금액 손익 상태
-// assets: 평가금액
-// payments: 입금금액
-// isActive: 계좌활성여부
-// createdAt: 계좌개설일
-// ********************
 interface AccountsTableProps {
   id: number;
   userId: number;
@@ -53,7 +38,7 @@ const useAccountList = () => {
   const queries: QueriesParmas = useMemo(() => {
     if (router.query) {
       return {
-        page: Number(router.query.page),
+        page: router.query.page ? Number(router.query.page) : 1,
         broker: getMapValue(brokerMap, router.query.broker),
         status: getMapValue(statusMap, router.query.status),
         isActive:

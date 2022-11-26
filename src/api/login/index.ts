@@ -1,5 +1,5 @@
 import { IAuth } from '@src/models/IAuth';
-import { API_URL } from '@src/types/enum';
+
 import httpInstance from '../httpInstance';
 
 interface ReqLogin {
@@ -8,7 +8,7 @@ interface ReqLogin {
 }
 
 export const reqLogin = async ({ email, password }: ReqLogin) => {
-  const data = await httpInstance.post<IAuth>(API_URL.LOGIN, {
+  const data = await httpInstance.post<IAuth>('/api/login', {
     email,
     password,
   });
@@ -17,7 +17,7 @@ export const reqLogin = async ({ email, password }: ReqLogin) => {
 };
 
 export const reqLogout = async () => {
-  const data = await httpInstance.post(API_URL.LOGOUT);
-  console.log(data);
+  const data = await httpInstance.post('/api/logout');
+
   return data;
 };

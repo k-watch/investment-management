@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { AxiosError } from 'axios';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { styled } from '@mui/material';
@@ -12,6 +13,9 @@ import { IAccount } from '@src/models/IAccount';
 const AccountListPage = () => {
   return (
     <>
+      <Head>
+        <title>계좌 목록</title>
+      </Head>
       <S.Header>
         <AccountsSelect />
         <Search placeholder="계좌명 검색" />
@@ -55,7 +59,10 @@ export const getServerSideProps = async (context: any) => {
           data,
         };
       } catch (e) {
-        if (e instanceof AxiosError) {
+        if (e instanceof AxiosError && e.response?.status === 401) {
+          context.res.setHeader('Set-Cookie', [
+            `token=expired; Max-Age=0; Path=/`,
+          ]);
           return {
             redirect: {
               destination: '/login',
@@ -80,7 +87,10 @@ export const getServerSideProps = async (context: any) => {
           data,
         };
       } catch (e) {
-        if (e instanceof AxiosError) {
+        if (e instanceof AxiosError && e.response?.status === 401) {
+          context.res.setHeader('Set-Cookie', [
+            `token=expired; Max-Age=0; Path=/`,
+          ]);
           return {
             redirect: {
               destination: '/login',

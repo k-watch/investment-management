@@ -1,11 +1,11 @@
-import * as React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { ReactNode, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -13,33 +13,34 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { AccountBalance, Person } from '@mui/icons-material';
 import LogoutIcon from '@mui/icons-material/Logout';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { styled } from '@mui/material';
 import { blueGrey, grey } from '@mui/material/colors';
 
-const drawerWidth = 240;
+import { NAVIGATE_URL } from '@src/types/enum';
+import { reqLogout } from '@src/api/login';
+
+const DRAWER_WIDTH = 240;
 
 const menus = [
   {
     id: '1',
     icon: <AccountBalance />,
     text: '계좌 목록',
-    href: '/accounts',
+    href: NAVIGATE_URL.ACCOUNT,
   },
   {
     id: '2',
     icon: <Person />,
     text: '사용자 목록',
-    href: '/users',
+    href: NAVIGATE_URL.USERS,
   },
 ];
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
-  const [title, setTitle] = React.useState('');
+  const [title, setTitle] = useState('');
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (router.pathname) {
       const selectMenu = menus
         .filter((menu) => router.pathname === menu.href)
@@ -51,20 +52,28 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     }
   }, [router.pathname]);
 
+  const handleLogout = () => {
+    reqLogout();
+    router.push(NAVIGATE_URL.LOGIN);
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
-      <StyledAppBar
-        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+      <S.AppBar
+        sx={{
+          width: `calc(100% - ${DRAWER_WIDTH}px)`,
+          ml: `${DRAWER_WIDTH}px`,
+        }}
       >
-        <StyledToolbar>{title}</StyledToolbar>
-      </StyledAppBar>
+        <S.Toolbar>{title}</S.Toolbar>
+      </S.AppBar>
 
       <Drawer
         sx={{
-          width: drawerWidth,
+          width: DRAWER_WIDTH,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            width: drawerWidth,
+            width: DRAWER_WIDTH,
             boxSizing: 'border-box',
           },
         }}
@@ -77,36 +86,27 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           {menus.map(({ id, text, icon, href }) => (
             <Link href={href} key={id}>
               <ListItem disablePadding>
-                <StyledListItemButton
+                <S.ListItemButton
                   onClick={() => setTitle(text)}
                   selected={router.pathname === href}
                 >
                   <ListItemIcon>{icon}</ListItemIcon>
-                  <StyledListItemText primary={text} />
-                </StyledListItemButton>
+                  <S.ListItemText primary={text} />
+                </S.ListItemButton>
               </ListItem>
             </Link>
           ))}
           <ListItem disablePadding>
-            <StyledListItemButton>
+            <S.ListItemButton onClick={() => handleLogout()}>
               <ListItemIcon>
                 <LogoutIcon />
               </ListItemIcon>
-              <StyledListItemText primary="로그아웃" />
-            </StyledListItemButton>
+              <S.ListItemText primary="로그아웃" />
+            </S.ListItemButton>
           </ListItem>
         </List>
       </Drawer>
-      <div
-        style={{
-          width: '100%',
-          height: '100vh',
-          padding: '78px 30px 30px 30px',
-          backgroundColor: `${grey[100]}`,
-        }}
-      >
-        {children}
-      </div>
+      <S.ChildrenWrap>{children}</S.ChildrenWrap>
     </Box>
   );
 };
@@ -120,33 +120,40 @@ const S = {
     textAlign: 'center',
     color: `${blueGrey[900]}`,
   })),
+
+  AppBar: styled(AppBar)(() => ({
+    '&.MuiPaper-root': {
+      boxShadow: 'none',
+      borderBottom: `1px solid ${grey[300]}`,
+    },
+  })),
+
+  Toolbar: styled(Toolbar)(() => ({
+    '&.MuiToolbar-root': {
+      backgroundColor: 'white',
+      fontSize: 20,
+      fontWeight: 700,
+      color: 'black',
+    },
+  })),
+
+  ListItemButton: styled(ListItemButton)(() => ({
+    '&.Mui-selected': {
+      backgroundColor: `${grey[300]}`,
+    },
+  })),
+
+  ListItemText: styled(ListItemText)(() => ({
+    '& .MuiTypography-root': {
+      fontWeight: 700,
+      color: `black`,
+    },
+  })),
+
+  ChildrenWrap: styled('div')(() => ({
+    width: '100%',
+    height: '100vh',
+    padding: '78px 30px 30px 30px',
+    backgroundColor: `${grey[100]}`,
+  })),
 };
-
-const StyledAppBar = styled(AppBar)(() => ({
-  '&.MuiPaper-root': {
-    boxShadow: 'none',
-    borderBottom: `1px solid ${grey[300]}`,
-  },
-}));
-
-const StyledToolbar = styled(Toolbar)(() => ({
-  '&.MuiToolbar-root': {
-    backgroundColor: 'white',
-    fontSize: 20,
-    fontWeight: 700,
-    color: 'black',
-  },
-}));
-
-const StyledListItemButton = styled(ListItemButton)(() => ({
-  '&.Mui-selected': {
-    backgroundColor: `${grey[300]}`,
-  },
-}));
-
-const StyledListItemText = styled(ListItemText)(() => ({
-  '& .MuiTypography-root': {
-    fontWeight: 700,
-    color: `black`,
-  },
-}));

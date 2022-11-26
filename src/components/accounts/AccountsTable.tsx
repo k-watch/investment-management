@@ -6,7 +6,7 @@ import TableRow from '@mui/material/TableRow';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
-import { grey, blueGrey } from '@mui/material/colors';
+import { blueGrey } from '@mui/material/colors';
 
 import useAccountList from './hooks/useAccountsTable';
 
@@ -79,13 +79,6 @@ const S = {
     },
   })),
   TableRow: styled(TableRow)(({ theme }) => ({
-    '&.MuiTableRow-root': {
-      '&:hover': {
-        backgroundColor: grey[300],
-        cursor: 'pointer',
-      },
-    },
-
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,
     },
