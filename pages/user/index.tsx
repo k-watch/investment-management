@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { GetServerSidePropsContext } from 'next/types';
 import { AxiosError } from 'axios';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 
@@ -20,7 +21,9 @@ const UserPage = () => {
 
 export default UserPage;
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
   const queryClient = new QueryClient();
   const token = context.req.cookies.token;
 
@@ -56,7 +59,7 @@ export const getServerSideProps = async (context: any) => {
         }
       }
     }),
-    queryClient.prefetchQuery(['userAccounts', id], async () => {
+    queryClient.prefetchQuery(['user', 'accounts', id], async () => {
       try {
         const { data } = await httpInstance.get<IAccount[]>(
           'http://localhost:8000/accounts',

@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { RootState } from '../index';
+
 interface AccountsState {
   totalPage: number;
 }
@@ -17,8 +19,8 @@ export const accountsSlice = createSlice({
     },
   },
 });
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const accountsSelector = (state: any) => state.accounts;
+
+export const accountsSelector = (state: RootState) => state.accounts;
 export const { setTotalPage } = accountsSlice.actions;
 
 export default accountsSlice.reducer;

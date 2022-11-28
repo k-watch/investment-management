@@ -7,7 +7,7 @@ const LoginPage = () => {
   return (
     <>
       <Head>
-        <title>사용자 목록</title>
+        <title>로그인</title>
       </Head>
       <Login />
     </>

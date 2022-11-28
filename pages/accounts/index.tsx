@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { GetServerSidePropsContext } from 'next/types';
 import { AxiosError } from 'axios';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { styled } from '@mui/material';
@@ -28,7 +29,9 @@ const AccountListPage = () => {
 
 export default AccountListPage;
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
   const queryClient = new QueryClient();
   const token = context.req.cookies.token;
 

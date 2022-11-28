@@ -12,7 +12,7 @@ const useGetUserQuery = (id: string) => {
         select: (data: IUser[]) => data.at(0),
       },
       {
-        queryKey: ['userAccounts', id],
+        queryKey: ['user', 'accounts', id],
         queryFn: () => reqGetUserAccountList(id),
       },
     ],

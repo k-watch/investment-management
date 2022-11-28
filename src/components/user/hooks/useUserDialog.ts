@@ -58,8 +58,7 @@ const useUserDialog = ({ user }: { user: UserDialogProps }) => {
   };
 
   const handleModify = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const isDisabled = Object.entries(userForm).every(([k, v]) =>
+    const isDisabled = Object.entries(userForm).every(([v]) =>
       v !== '' ? true : false
     );
 
