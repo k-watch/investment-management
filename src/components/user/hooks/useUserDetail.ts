@@ -74,7 +74,7 @@ const useUserDetail = () => {
         createdAt: userData.createdAt.slice(0, 10),
       });
     }
-  }, [resUsers.isFetched, resUsers.data]);
+  }, [resUsers.data]);
 
   useEffect(() => {
     if (resAccounts.data) {
@@ -105,7 +105,7 @@ const useUserDetail = () => {
       });
       setAccounts(accountList);
     }
-  }, [resAccounts.isFetched, resAccounts.data]);
+  }, [resAccounts.data]);
 
   return { user, accounts };
 };

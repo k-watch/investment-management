@@ -100,9 +100,9 @@ const useAccountList = () => {
       });
       dispatch(setTotalPage(totalCount));
 
-      setList(accounts);
+      setList([...accounts]);
     }
-  }, [resAccounts.isFetched, resUsers.isFetched, dispatch]);
+  }, [resAccounts.data, dispatch]);
 
   return { list };
 };

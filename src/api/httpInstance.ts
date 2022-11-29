@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-const httpInstance = axios.create({
-  timeout: 3000,
-});
+const httpInstance = axios.create();
 
 export default httpInstance;

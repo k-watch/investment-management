@@ -19,7 +19,12 @@ const useLogin = () => {
     }
   };
 
-  return { emailRef, passwordRef, handleSubmit };
+  return {
+    emailRef,
+    passwordRef,
+    isLoading: loginMutation.isLoading,
+    handleSubmit,
+  };
 };
 
 export default useLogin;

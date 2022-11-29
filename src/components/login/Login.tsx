@@ -1,4 +1,11 @@
-import { Button, InputAdornment, styled, TextField } from '@mui/material';
+import {
+  Button,
+  CircularProgress,
+  InputAdornment,
+  Dialog,
+  styled,
+  TextField,
+} from '@mui/material';
 import { blueGrey, grey } from '@mui/material/colors';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
@@ -7,65 +14,94 @@ import InputIcon from '@mui/icons-material/Input';
 import useLogin from './hooks/useLogin';
 
 const Login = () => {
-  const { emailRef, passwordRef, handleSubmit } = useLogin();
+  const { emailRef, passwordRef, isLoading, handleSubmit } = useLogin();
 
   return (
-    <S.Wrap>
-      <h1 className="header">PREFACE</h1>
-      <form onSubmit={handleSubmit}>
-        <S.Title>
-          <PersonOutlineIcon />
-          <p>로그인</p>
-        </S.Title>
-        <S.InputWrap>
-          <TextField
-            inputRef={emailRef}
-            focused
-            fullWidth
-            margin="normal"
-            placeholder="아이디를 입력하세요."
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <PersonOutlineIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <TextField
-            inputRef={passwordRef}
-            type="password"
-            focused
-            fullWidth
-            margin="normal"
-            placeholder="비밀번호를 입력하세요."
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LockOpenIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            disableElevation
-            fullWidth
-            startIcon={<InputIcon />}
-          >
-            로그인
-          </Button>
-        </S.InputWrap>
-      </form>
-      <p className="footer">© December and Company</p>
-    </S.Wrap>
+    <>
+      {isLoading ? (
+        <S.Dialog open={isLoading}>
+          <p>Heroku 딜레이로 인해 최초 로딩이 느릴 수 있습니다.</p>
+          <CircularProgress />
+        </S.Dialog>
+      ) : (
+        <S.Wrap>
+          <h1 className="header">PREFACE</h1>
+          <form onSubmit={handleSubmit}>
+            <S.Title>
+              <PersonOutlineIcon />
+              <p>로그인</p>
+            </S.Title>
+            <S.InputWrap>
+              <TextField
+                inputRef={emailRef}
+                focused
+                fullWidth
+                margin="normal"
+                placeholder="아이디를 입력하세요."
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PersonOutlineIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                inputRef={passwordRef}
+                type="password"
+                focused
+                fullWidth
+                margin="normal"
+                placeholder="비밀번호를 입력하세요."
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LockOpenIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                disableElevation
+                fullWidth
+                startIcon={<InputIcon />}
+              >
+                로그인
+              </Button>
+            </S.InputWrap>
+          </form>
+          <p className="footer">© December and Company</p>
+        </S.Wrap>
+      )}
+    </>
   );
 };
 
 export default Login;
 
 const S = {
+  Dialog: styled(Dialog)(() => ({
+    '& .MuiPaper-root': {
+      display: 'flex',
+      alignItems: 'center',
+      minWidth: 400,
+      padding: 30,
+
+      p: {
+        marginBottom: 20,
+        fontSize: 18,
+        fontWeight: 500,
+      },
+    },
+    '& .MuiTypography-h6': {
+      '& .name': {
+        fontWeight: 700,
+      },
+    },
+  })),
+
   Wrap: styled('div')(() => ({
     display: 'flex',
     flexDirection: 'column',
