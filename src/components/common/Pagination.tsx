@@ -13,7 +13,9 @@ const Pagination = () => {
   const router = useRouter();
 
   const handleChange = (event: React.ChangeEvent<unknown>, page: number) => {
-    queryParams(router, QUERY_PARAM_KEYWORD.PAGE, page.toString());
+    queryParams(router, QUERY_PARAM_KEYWORD.PAGE, page.toString(), {
+      shallow: true,
+    });
   };
 
   return <S.Pagination count={totalPage} onChange={handleChange} />;

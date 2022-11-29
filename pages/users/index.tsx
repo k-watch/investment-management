@@ -41,7 +41,7 @@ export const getServerSideProps = async (
     queryClient.prefetchQuery(['accounts'], async () => {
       try {
         const { headers, data } = await httpInstance.get<IUser[]>(
-          'http://localhost:8000/users',
+          `${process.env.NEXT_PUBLIC_API_URL}/users`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

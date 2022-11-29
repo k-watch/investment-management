@@ -20,7 +20,7 @@ const Login = () => {
     <>
       {isLoading ? (
         <S.Dialog open={isLoading}>
-          <p>Heroku 딜레이로 인해 최초 로딩이 느릴 수 있습니다.</p>
+          <p>로딩중입니다.</p>
           <CircularProgress />
         </S.Dialog>
       ) : (

@@ -82,7 +82,7 @@ const useUsersTable = () => {
   }, [data, dispatch]);
 
   const handleClick = (id: number) => {
-    router.push(`/user?id=${id}`);
+    router.push(`/user?id=${id}`, undefined, { shallow: true });
   };
 
   return { list, handleClick };

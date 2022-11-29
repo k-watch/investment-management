@@ -33,7 +33,7 @@ export const getServerSideProps = async (
     queryClient.prefetchQuery(['user', id], async () => {
       try {
         const { data } = await httpInstance.get<IUser[]>(
-          'http://localhost:8000/users',
+          `${process.env.NEXT_PUBLIC_API_URL}/users`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -62,7 +62,7 @@ export const getServerSideProps = async (
     queryClient.prefetchQuery(['user', 'accounts', id], async () => {
       try {
         const { data } = await httpInstance.get<IAccount[]>(
-          'http://localhost:8000/accounts',
+          `${process.env.NEXT_PUBLIC_API_URL}/accounts`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

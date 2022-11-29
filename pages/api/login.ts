@@ -21,7 +21,7 @@ export default async function handler(
 
   try {
     const { data } = await httpInstance.post<IAuth>(
-      'http://localhost:8000/login',
+      `${process.env.NEXT_PUBLIC_API_URL}/login`,
       {
         email,
         password,
