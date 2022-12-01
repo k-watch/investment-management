@@ -47,7 +47,7 @@ export const getServerSideProps = async (
               Authorization: `Bearer ${token}`,
             },
             params: {
-              _page: page,
+              _page: page ? page : 1,
               _limit: 15,
               isActive,
               isStaff,

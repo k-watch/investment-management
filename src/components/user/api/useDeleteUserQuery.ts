@@ -9,7 +9,7 @@ const useDeleteUserQuery = () => {
 
   const deleteUserMutation = useMutation(reqDeleteUser, {
     onSuccess: () => {
-      router.push(NAVIGATE_URL.USERS, undefined, { shallow: true });
+      router.push(NAVIGATE_URL.USERS);
     },
   });
 
