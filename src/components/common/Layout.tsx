@@ -54,7 +54,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
   const handleLogout = async () => {
     await reqLogout();
-    router.push(NAVIGATE_URL.LOGIN, undefined, { shallow: true });
+    router.push(NAVIGATE_URL.LOGIN);
   };
 
   return (
