@@ -48,11 +48,11 @@ TypeScript | Next.js | Redux Toolkit | React Query | MUI
  </br>
  
 ## ✔ 구현 방법
- ### Redux Toolkit 을 사용하면 클라이언트 상태 관리
+ ### Redux Toolkit 을 사용한 클라이언트 상태 관리
 - 전역 상태 관리를 위한 Redux Toolkit 은 기존 Redux의 방대한 보일러 코드들을 사용하지 않고도 동일한 기능을 발휘하고, 가독성이 뛰어나다 생각하여 사용했습니다. 
 https://github.com/k-watch/investment-management/blob/9da04fd8a2fbcf031ad836df55a5ee68587ca510/src/store/accounts/accounts.ts#L13-L24
 
-### React Query 를 사용하면 서버 상태 관리
+### React Query 를 사용한 서버 상태 관리
 
 - 서버 상태 관리 및 캐싱 전략을 위해 React Query 를 사용했습니다. stale 값을 세팅해 결과값을 캐싱하는 전략을 사용할 수 있지만 계좌 관리인만큼 금액 노출은 민감하다고 판단하여 값을 설정하지 않았습니다.
   https://github.com/k-watch/investment-management/blob/9da04fd8a2fbcf031ad836df55a5ee68587ca510/src/components/accounts/api/useAccountsQuery.ts#L12-L35
