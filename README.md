@@ -3,6 +3,14 @@
 > 투자 관리 서비스의 관리자 기능 구현
 >
 > ### 🌍 [배포링크](https://investment-management.vercel.app/)
+>
+> <br/>
+>
+> #### TEST AUTH
+>
+> #### ID : admin@admin.com
+>
+> #### PW : 1234
 
 <br/>
 
