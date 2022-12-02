@@ -1,21 +1,21 @@
+import { AppProps, AppInitialProps } from 'next/app';
+import { ComponentType, ReactElement, ReactNode } from 'react';
 import {
   QueryClient,
   QueryClientProvider,
   Hydrate,
 } from '@tanstack/react-query';
-import { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 
 import initStyles from '@src/styles/initStyles';
 import { createEmotionCache } from '@src/utils/createEmotionCache';
 import { CacheProvider, EmotionCache } from '@emotion/react';
-import { ThemeProvider, CssBaseline } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import theme from '@src/styles/theme';
+import CssBaseline from '@mui/material/CssBaseline';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { store } from '@src/store';
 import { Global } from '@emotion/react';
-import { ComponentType, ReactElement, ReactNode } from 'react';
-import type { AppInitialProps } from 'next/app';
 
 import Layout from '@src/components/common/Layout';
 

@@ -53,7 +53,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     }
   }, [router.pathname]);
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     cookieInstance.remove('token');
     router.push(NAVIGATE_URL.LOGIN);
   };
