@@ -9,16 +9,18 @@ interface SelectParams<T> {
   data: T;
 }
 
-const useAccountsQuery = (query: QueriesParmas) => {
+const useAccountsQuery = (query: QueriesParmas, enabled: boolean) => {
   const [resAccounts, resUsers] = useQueries({
     queries: [
       {
         queryKey: ['accounts', query],
         queryFn: () => reqGetAccountList(query),
+        enabled,
       },
       {
         queryKey: ['users'],
         queryFn: () => reqGetUsers(),
+        enabled,
         select: ({ data }: SelectParams<IUser[]>) => {
           if (!data) return undefined;
           return {
