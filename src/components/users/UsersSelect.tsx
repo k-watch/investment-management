@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import Select from '../common/Select';
+import CommonSelect from '../common/CommonSelect';
 
 const activeList = [
   ['true', '활성화'],
@@ -17,14 +17,14 @@ const UsersSelect = () => {
 
   return (
     <>
-      <Select
+      <CommonSelect
         label="계좌 활성화"
         keyword="isActive"
         state={isActive}
         list={activeList}
         handleChange={(e) => setIsActive(e.target.value)}
       />
-      <Select
+      <CommonSelect
         label="임직원 여부"
         keyword="isStaff"
         state={isStaff}

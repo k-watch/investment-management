@@ -1,12 +1,12 @@
 import { useRef } from 'react';
 import { useRouter } from 'next/router';
-import { TextField } from '@mui/material';
-import { styled } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import { styled } from '@mui/material/styles';
 
 import { queryParams } from '@src/utils/common';
 import { QUERY_PARAM_KEYWORD } from '@src/types/enum';
 
-const Search = ({ placeholder }: { placeholder: string }) => {
+const CommonSearch = ({ placeholder }: { placeholder: string }) => {
   const router = useRouter();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -33,7 +33,7 @@ const Search = ({ placeholder }: { placeholder: string }) => {
   );
 };
 
-export default Search;
+export default CommonSearch;
 
 const S = {
   Wrap: styled('div')(() => ({

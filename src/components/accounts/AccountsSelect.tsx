@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import Select from '../common/Select';
+import CommonSelect from '../common/CommonSelect';
 import { brokerMap, statusMap } from './types';
 
 const brokerList = [...brokerMap.entries()];
@@ -17,21 +17,21 @@ const AccountsSelect = () => {
 
   return (
     <>
-      <Select
+      <CommonSelect
         label="증권사"
         keyword="broker"
         state={broker}
         list={brokerList}
         handleChange={(e) => setBroker(e.target.value)}
       />
-      <Select
+      <CommonSelect
         label="계좌 상태"
         keyword="status"
         state={status}
         list={statusList}
         handleChange={(e) => setStatus(e.target.value)}
       />
-      <Select
+      <CommonSelect
         label="계좌 활성화"
         keyword="isActive"
         state={isActive}

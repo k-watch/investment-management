@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import { Select as MuiSelect, SelectChangeEvent } from '@mui/material';
-import { styled } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { queryParams } from '@src/utils/common';
 
@@ -15,7 +15,13 @@ interface SelectProps {
   handleChange: (e: SelectChangeEvent) => void;
 }
 
-const Select = ({ label, state, handleChange, list, keyword }: SelectProps) => {
+const CommonSelect = ({
+  label,
+  state,
+  handleChange,
+  list,
+  keyword,
+}: SelectProps) => {
   const router = useRouter();
 
   const handleClick = (event: SelectChangeEvent) => {
@@ -27,19 +33,19 @@ const Select = ({ label, state, handleChange, list, keyword }: SelectProps) => {
   return (
     <S.FormControl size="small">
       <InputLabel>{label}</InputLabel>
-      <MuiSelect value={state} onChange={handleClick}>
+      <Select value={state} onChange={handleClick}>
         <MenuItem value="">선택 안함</MenuItem>
         {list.map(([key, value]) => [
           <MenuItem key={key} value={value}>
             {value}
           </MenuItem>,
         ])}
-      </MuiSelect>
+      </Select>
     </S.FormControl>
   );
 };
 
-export default Select;
+export default CommonSelect;
 
 const S = {
   FormControl: styled(FormControl)(() => ({

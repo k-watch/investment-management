@@ -14,11 +14,11 @@ import ListItemText from '@mui/material/ListItemText';
 import AccountBalance from '@mui/icons-material/AccountBalance';
 import Person from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { styled } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { blueGrey, grey } from '@mui/material/colors';
 
 import { NAVIGATE_URL } from '@src/types/enum';
-import { reqLogout } from '@src/api/login';
+import { cookieInstance } from '@src/utils/cookieInstance';
 
 const DRAWER_WIDTH = 240;
 
@@ -54,7 +54,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
   }, [router.pathname]);
 
   const handleLogout = async () => {
-    await reqLogout();
+    cookieInstance.remove('token');
     router.push(NAVIGATE_URL.LOGIN);
   };
 

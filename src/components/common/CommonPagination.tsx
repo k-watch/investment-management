@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Pagination as MuiPagination } from '@mui/material';
-import { styled } from '@mui/material';
+import Pagination from '@mui/material/Pagination';
+import { styled } from '@mui/material/styles';
 
 import { accountsSelector } from '@src/store/accounts/accounts';
 import { queryParams } from '@src/utils/common';
 import { QUERY_PARAM_KEYWORD } from '@src/types/enum';
 
-const Pagination = () => {
+const CommonPagination = () => {
   const { totalPage } = useSelector(accountsSelector);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -38,10 +38,10 @@ const Pagination = () => {
   );
 };
 
-export default Pagination;
+export default CommonPagination;
 
 const S = {
-  Pagination: styled(MuiPagination)(() => ({
+  Pagination: styled(Pagination)(() => ({
     display: 'flex',
     justifyContent: 'center',
     marginTop: 30,

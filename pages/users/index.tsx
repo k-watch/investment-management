@@ -2,12 +2,12 @@ import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next/types';
 import { AxiosError } from 'axios';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { styled } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 import UsersSelect from '@src/components/users/UsersSelect';
-import Search from '@src/components/common/Search';
+import CommonSearch from '@src/components/common/CommonSearch';
 import UsersTable from '@src/components/users/UsersTable';
-import Pagination from '@src/components/common/Pagination';
+import CommonPagination from '@src/components/common/CommonPagination';
 import httpInstance from '@src/api/httpInstance';
 import { IUser } from '@src/models/IUser';
 import { PAGE_LIMIT } from '@src/types/enum';
@@ -20,10 +20,10 @@ const UsersPage = () => {
       </Head>
       <S.Header>
         <UsersSelect />
-        <Search placeholder="사용자 검색" />
+        <CommonSearch placeholder="사용자 검색" />
       </S.Header>
       <UsersTable />
-      <Pagination />
+      <CommonPagination />
     </>
   );
 };

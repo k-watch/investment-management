@@ -15,9 +15,3 @@ export const reqLogin = async ({ email, password }: ReqLogin) => {
 
   return data;
 };
-
-export const reqLogout = async () => {
-  const data = await httpInstance.post('/logout');
-
-  return data;
-};

@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button';
-import { styled } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 import useUserDetail from './hooks/useUserDetail';
 import useDeleteUserQuery from './api/useDeleteUserQuery';

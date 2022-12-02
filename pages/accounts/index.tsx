@@ -2,12 +2,12 @@ import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next/types';
 import { AxiosError } from 'axios';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { styled } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 import AccountsSelect from '@src/components/accounts/AccountsSelect';
 import AccountsTable from '@src/components/accounts/AccountsTable';
-import Search from '@src/components/common/Search';
-import Pagination from '@src/components/common/Pagination';
+import CommonSearch from '@src/components/common/CommonSearch';
+import CommonPagination from '@src/components/common/CommonPagination';
 import httpInstance from '@src/api/httpInstance';
 import { IAccount } from '@src/models/IAccount';
 import { PAGE_LIMIT } from '@src/types/enum';
@@ -20,10 +20,10 @@ const AccountListPage = () => {
       </Head>
       <S.Header>
         <AccountsSelect />
-        <Search placeholder="계좌명 검색" />
+        <CommonSearch placeholder="계좌명 검색" />
       </S.Header>
       <AccountsTable />
-      <Pagination />
+      <CommonPagination />
     </>
   );
 };
