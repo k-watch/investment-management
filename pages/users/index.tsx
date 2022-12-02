@@ -10,6 +10,7 @@ import UsersTable from '@src/components/users/UsersTable';
 import Pagination from '@src/components/common/Pagination';
 import httpInstance from '@src/api/httpInstance';
 import { IUser } from '@src/models/IUser';
+import { PAGE_LIMIT } from '@src/types/enum';
 
 const UsersPage = () => {
   return (
@@ -40,21 +41,18 @@ export const getServerSideProps = async (
   await Promise.all([
     queryClient.prefetchQuery(['accounts'], async () => {
       try {
-        const { headers, data } = await httpInstance.get<IUser[]>(
-          `${process.env.NEXT_PUBLIC_API_URL}/users`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            params: {
-              _page: page ? page : 1,
-              _limit: 15,
-              isActive,
-              isStaff,
-              q,
-            },
-          }
-        );
+        const { headers, data } = await httpInstance.get<IUser[]>(`/users`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: {
+            _page: page ? page : 1,
+            _limit: PAGE_LIMIT,
+            isActive,
+            isStaff,
+            q,
+          },
+        });
 
         return {
           totalCount: headers['x-total-count'] || 0,

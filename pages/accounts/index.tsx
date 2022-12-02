@@ -10,6 +10,7 @@ import Search from '@src/components/common/Search';
 import Pagination from '@src/components/common/Pagination';
 import httpInstance from '@src/api/httpInstance';
 import { IAccount } from '@src/models/IAccount';
+import { PAGE_LIMIT } from '@src/types/enum';
 
 const AccountListPage = () => {
   return (
@@ -41,14 +42,14 @@ export const getServerSideProps = async (
     queryClient.prefetchQuery(['accounts'], async () => {
       try {
         const { headers, data } = await httpInstance.get<IAccount[]>(
-          `${process.env.NEXT_PUBLIC_API_URL}/accounts`,
+          `/accounts`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
             params: {
               _page: page,
-              _limit: 15,
+              _limit: PAGE_LIMIT,
               brokerId: broker,
               status: status,
               isActive: isActive,
@@ -77,14 +78,11 @@ export const getServerSideProps = async (
     }),
     queryClient.prefetchQuery(['users'], async () => {
       try {
-        const { headers, data } = await httpInstance.get<IAccount[]>(
-          `${process.env.NEXT_PUBLIC_API_URL}/users`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const { headers, data } = await httpInstance.get<IAccount[]>(`/users`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         return {
           totalCount: headers['x-total-count'] || 0,
           data,

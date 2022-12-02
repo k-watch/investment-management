@@ -20,13 +20,10 @@ export default async function handler(
   const { email, password } = req.body;
 
   try {
-    const { data } = await httpInstance.post<IAuth>(
-      `${process.env.NEXT_PUBLIC_API_URL}/login`,
-      {
-        email,
-        password,
-      }
-    );
+    const { data } = await httpInstance.post<IAuth>(`/login`, {
+      email,
+      password,
+    });
 
     res.status(200).json(data);
   } catch (e) {

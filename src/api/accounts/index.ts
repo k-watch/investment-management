@@ -9,22 +9,19 @@ import httpInstance from '../httpInstance';
 export const reqGetAccountList = async (queries: QueriesParmas) => {
   const token = cookieInstance.get('token');
 
-  const { headers, data } = await httpInstance.get<IAccount[]>(
-    '/api/accounts',
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      params: {
-        _page: queries.page,
-        _limit: PAGE_LIMIT,
-        brokerId: queries.broker,
-        status: queries.status,
-        isActive: queries.isActive,
-        q: queries.q,
-      },
-    }
-  );
+  const { headers, data } = await httpInstance.get<IAccount[]>('/accounts', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    params: {
+      _page: queries.page,
+      _limit: PAGE_LIMIT,
+      brokerId: queries.broker,
+      status: queries.status,
+      isActive: queries.isActive,
+      q: queries.q,
+    },
+  });
 
   return {
     totalCount: headers['x-total-count'] || 0,
@@ -35,7 +32,7 @@ export const reqGetAccountList = async (queries: QueriesParmas) => {
 export const reqGetUsers = async () => {
   const token = cookieInstance.get('token');
 
-  const { headers, data } = await httpInstance.get<IUser[]>('/api/users', {
+  const { headers, data } = await httpInstance.get<IUser[]>('/users', {
     headers: {
       Authorization: `Bearer ${token}`,
     },

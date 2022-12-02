@@ -8,7 +8,7 @@ import httpInstance from '../httpInstance';
 export const reqGetUsers = async (queries?: QueriesParmas) => {
   const token = cookieInstance.get('token');
 
-  const { headers, data } = await httpInstance.get<IUser[]>('/api/users', {
+  const { headers, data } = await httpInstance.get<IUser[]>('/users', {
     headers: {
       Authorization: `Bearer ${token}`,
     },

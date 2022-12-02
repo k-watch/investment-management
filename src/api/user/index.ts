@@ -13,7 +13,7 @@ interface ReqUpdateUser {
 export const reqGetUser = async (id: string) => {
   const token = cookieInstance.get('token');
 
-  const { data } = await httpInstance.get<IUser[]>('/api/users', {
+  const { data } = await httpInstance.get<IUser[]>('/users', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -28,7 +28,7 @@ export const reqGetUser = async (id: string) => {
 export const reqGetUserAccountList = async (id: string) => {
   const token = cookieInstance.get('token');
 
-  const { data } = await httpInstance.get<IAccount[]>('/api/accounts', {
+  const { data } = await httpInstance.get<IAccount[]>('/accounts', {
     headers: {
       Authorization: `Bearer ${token}`,
     },

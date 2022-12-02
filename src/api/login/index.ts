@@ -8,7 +8,7 @@ interface ReqLogin {
 }
 
 export const reqLogin = async ({ email, password }: ReqLogin) => {
-  const data = await httpInstance.post<IAuth>('/api/login', {
+  const data = await httpInstance.post<IAuth>('/login', {
     email,
     password,
   });
@@ -17,7 +17,7 @@ export const reqLogin = async ({ email, password }: ReqLogin) => {
 };
 
 export const reqLogout = async () => {
-  const data = await httpInstance.post('/api/logout');
+  const data = await httpInstance.post('/logout');
 
   return data;
 };
