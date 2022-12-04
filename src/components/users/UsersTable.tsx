@@ -8,10 +8,15 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
 import { grey, blueGrey } from '@mui/material/colors';
 
+import { PAGE_LIMIT } from '@src/types/enum';
+
 import useUsersTable from './hooks/useUsersTable';
+import CommonSkeleton from '../common/CommonSkeleton';
 
 const UsersTable = () => {
-  const { list, handleClick } = useUsersTable();
+  const { list, isLoading, handleClick } = useUsersTable();
+
+  if (isLoading) return CommonSkeleton(PAGE_LIMIT);
 
   return (
     <TableContainer component={Paper}>

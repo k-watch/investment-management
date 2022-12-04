@@ -104,7 +104,7 @@ const useAccountList = () => {
     }
   }, [resAccounts.data, dispatch]);
 
-  return { list };
+  return { list, isLoading: resAccounts.isLoading };
 };
 
 export default useAccountList;

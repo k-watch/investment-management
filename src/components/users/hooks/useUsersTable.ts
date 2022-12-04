@@ -52,11 +52,11 @@ const useUsersTable = () => {
     };
   }, [router.query]);
 
-  const data = useUsersQuery(queries);
+  const { data: resUsers, isLoading } = useUsersQuery(queries);
 
   useEffect(() => {
-    if (data) {
-      const { totalCount, data: userList } = data;
+    if (resUsers) {
+      const { totalCount, data: userList } = resUsers;
 
       const users = userList.map((user) => {
         return {
@@ -79,13 +79,13 @@ const useUsersTable = () => {
 
       setList(users);
     }
-  }, [data, dispatch]);
+  }, [resUsers, dispatch]);
 
   const handleClick = (id: number) => {
     router.push(`/user?id=${id}`);
   };
 
-  return { list, handleClick };
+  return { list, isLoading, handleClick };
 };
 
 export default useUsersTable;

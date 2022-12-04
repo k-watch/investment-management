@@ -14,11 +14,12 @@ import InputIcon from '@mui/icons-material/Input';
 import useLogin from './hooks/useLogin';
 
 const Login = () => {
-  const { emailRef, passwordRef, isLoading, handleSubmit } = useLogin();
+  const { emailRef, passwordRef, isLoading, isPageLoading, handleSubmit } =
+    useLogin();
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || isPageLoading ? (
         <S.Dialog open={isLoading}>
           <p>로딩중입니다.</p>
           <CircularProgress />

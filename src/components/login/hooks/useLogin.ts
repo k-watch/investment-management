@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import useLoginQuery from '../api/useLoginQuery';
 
 const useLogin = () => {
-  const { loginMutation } = useLoginQuery();
+  const { isPageLoading, loginMutation } = useLoginQuery();
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -23,6 +23,7 @@ const useLogin = () => {
     emailRef,
     passwordRef,
     isLoading: loginMutation.isLoading,
+    isPageLoading,
     handleSubmit,
   };
 };

@@ -4,9 +4,11 @@ import { QueriesParmas } from '@src/types';
 import { reqGetUsers } from '@src/api/users';
 
 const useUsersQuery = (query: QueriesParmas) => {
-  const { data } = useQuery(['users', query], () => reqGetUsers(query));
+  const { data, isLoading } = useQuery(['users', query], () =>
+    reqGetUsers(query)
+  );
 
-  return data;
+  return { data, isLoading };
 };
 
 export default useUsersQuery;
